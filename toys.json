@@ -9,5 +9,23 @@
     "courierFee": 400,
     "payments": "Cash, bank transfer, JazzCash or Easypaisa"
   },
-  "toys": {}
+  "toys": {
+    "tmwjj7v6aphh3": {
+      "title": "Lola Bunny (Loony Tunes)",
+      "price": 300,
+      "was": 0,
+      "category": "Action figures",
+      "condition": "Very good",
+      "age": "",
+      "brand": "",
+      "box": "Complete, no box",
+      "status": "available",
+      "description": "McDonald's Toy. Got it when I was 8 or 9 years old. I used to love eating only the patty of my Happy meal haha :) . Was obsessed with Looney tunes, especially the roadrunner one. But now I occasionally rewatch them to get a nostalgic hit every now and then. \nThe figure is almost completely new, no scratches, and I didn't play much with it, so it's not worn out.",
+      "photos": [
+        "photos/mwjj194ooxp8.jpg"
+      ],
+      "created": 1794849781906,
+      "updated": 1794849781906
+    }
+  }
 }
