@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "name": "Second Play",
+    "tagline": "Pre-loved toys, ready to play again.",
+    "whatsapp": "",
+    "city": "",
+    "pickup": "",
+    "localFee": 250,
+    "courierFee": 400,
+    "payments": "Cash, bank transfer, JazzCash or Easypaisa"
+  },
+  "toys": {}
+}

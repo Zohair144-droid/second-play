@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Second Play · Pre-loved toys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff8ee;--card:#ffffff;--ink:#2b2140;--ink2:#6b6380;--line:#efe3d3;
+  --red:#ff5a4e;--red2:#e8463b;--sun:#ffc93c;--mint:#3ccf9e;--sky:#4aa8ff;--grape:#8b6cff;
+  --r:22px;--shadow:0 10px 30px -14px rgba(60,30,10,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
+body{font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:90px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+h1,h2,h3,.fred{font-family:Fredoka,Nunito,sans-serif;font-weight:600;letter-spacing:.2px}
+
+/* header */
+header{position:sticky;top:0;z-index:30;background:rgba(255,248,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Fredoka,Nunito,sans-serif;font-size:24px;font-weight:700;white-space:nowrap}
+.logo .mk{width:38px;height:38px;border-radius:12px;background:var(--red);display:grid;place-items:center;transform:rotate(-8deg);box-shadow:3px 3px 0 var(--sun)}
+.logo .mk svg{width:22px;height:22px}
+.search{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--line);border-radius:999px;padding:0 14px;height:44px;max-width:520px;margin-left:auto;transition:border-color .2s}
+.search:focus-within{border-color:var(--red)}
+.search input{border:0;outline:0;flex:1;background:none;font-size:15px;min-width:0}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#fff;border:2px solid var(--line);transition:transform .15s,border-color .2s;flex:none}
+.iconbtn:hover{border-color:var(--ink)}
+.iconbtn:active{transform:scale(.94)}
+.iconbtn svg{width:21px;height:21px}
+.badge{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--red);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;border:2px solid var(--bg)}
+.badge:empty{display:none}
+.seller-btn{height:44px;padding:0 16px;border-radius:14px;background:var(--ink);color:#fff;font-weight:800;font-size:14px;flex:none}
+.seller-btn.on{background:var(--mint)}
+
+/* hero */
+.hero{margin:22px 0 8px;border-radius:30px;background:var(--red);color:#fff;padding:38px 34px;position:relative;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.02}
+.hero h1 span{color:var(--sun)}
+.hero p{margin-top:12px;font-size:17px;opacity:.95;max-width:440px}
+.hero .cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px;border-radius:999px;font-weight:800;transition:transform .15s}
+.pill:active{transform:scale(.96)}
+.pill.y{background:var(--sun);color:var(--ink)}
+.pill.w{background:rgba(255,255,255,.18);color:#fff}
+.hero-art{position:relative;height:220px}
+.blob{position:absolute;border-radius:28px;display:grid;place-items:center;box-shadow:0 14px 30px -12px rgba(0,0,0,.35);animation:bob 4s ease-in-out infinite}
+.blob svg{width:56%;height:56%}
+.b1{width:120px;height:120px;background:var(--sun);left:8%;top:12%;transform:rotate(-10deg)}
+.b2{width:96px;height:96px;background:var(--sky);right:10%;top:0;animation-delay:-1.3s}
+.b3{width:110px;height:110px;background:var(--mint);right:26%;bottom:0;animation-delay:-2.4s;border-radius:50%}
+@keyframes bob{50%{translate:0 -10px}}
+.stats{display:flex;gap:22px;margin-top:22px;font-size:13px;opacity:.95}
+.stats b{display:block;font-family:Fredoka,Nunito,sans-serif;font-size:24px}
+
+/* chips + toolbar */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:2px solid var(--line);font-weight:700;font-size:14px;white-space:nowrap;transition:all .2s}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0 18px}
+.tools .count{font-weight:800;margin-right:auto}
+.sel{height:40px;border-radius:12px;border:2px solid var(--line);background:#fff;padding:0 10px;font-weight:700;font-size:14px}
+.tgl{display:flex;align-items:center;gap:7px;font-weight:700;font-size:14px;cursor:pointer;user-select:none}
+.tgl input{accent-color:var(--red);width:18px;height:18px}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;cursor:pointer;position:relative;opacity:0;transform:translateY(12px);animation:in .5s forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(60,30,10,.35)}
+.ph{aspect-ratio:1/1;background:#f6eee3;position:relative;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .ph img{transform:scale(1.05)}
+.noimg{width:100%;height:100%;display:grid;place-items:center;color:#d5c6b2}
+.noimg svg{width:40%}
+.tag{position:absolute;left:10px;top:10px;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+.tag.sold{background:var(--ink);color:#fff}
+.tag.reserved{background:var(--sun);color:var(--ink)}
+.tag.new{background:var(--mint);color:#fff}
+.heart{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;transition:transform .2s}
+.heart svg{width:19px;height:19px}
+.heart.on svg{fill:var(--red);stroke:var(--red)}
+.heart:active{transform:scale(.85)}
+.card.is-sold .ph img{filter:grayscale(.85);opacity:.7}
+.info{padding:13px 15px 15px}
+.info h3{font-size:17px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:42px}
+.meta{font-size:12.5px;color:var(--ink2);margin-top:4px;font-weight:700}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:8px}
+.price b{font-family:Fredoka,Nunito,sans-serif;font-size:21px;color:var(--red2)}
+.price s{color:var(--ink2);font-size:13px}
+.price .off{margin-left:auto;font-size:11px;font-weight:800;background:#ffe9e7;color:var(--red2);padding:3px 8px;border-radius:999px}
+.add{margin-top:11px;width:100%;height:40px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800;font-size:14px;transition:background .2s,transform .15s}
+.add:active{transform:scale(.97)}
+.add.in{background:var(--mint)}
+.add:disabled{background:#d9d2c7;cursor:not-allowed}
+.own{display:flex;gap:6px;margin-top:8px}
+.own button{flex:1;height:34px;border-radius:10px;background:#f5ede2;font-weight:800;font-size:12.5px}
+.own button.del{background:#ffe9e7;color:var(--red2)}
+.empty{text-align:center;padding:70px 20px;color:var(--ink2)}
+.empty svg{width:90px;margin:0 auto 14px;opacity:.5}
+.empty h3{color:var(--ink);font-size:22px;margin-bottom:6px}
+
+/* how it works */
+.how{margin:56px 0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.how div{background:#fff;border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.how i{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-style:normal;font-family:Fredoka,Nunito,sans-serif;font-size:20px;color:#fff;margin-bottom:12px}
+.how h3{font-size:18px;margin-bottom:4px}
+.how p{color:var(--ink2);font-size:14.5px}
+footer{text-align:center;color:var(--ink2);font-size:13px;padding:30px 0 10px}
+
+/* overlays */
+.scrim{position:fixed;inset:0;background:rgba(35,22,50,.45);opacity:0;pointer-events:none;transition:opacity .3s;z-index:50}
+.scrim.show{opacity:1;pointer-events:auto}
+.modal{position:fixed;left:50%;top:50%;width:min(940px,94vw);max-height:92vh;overflow:auto;background:#fff;border-radius:28px;z-index:60;transform:translate(-50%,-46%) scale(.97);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.2,.8,.2,1)}
+.modal.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,100vw);background:#fff;z-index:60;transform:translateX(100%);transition:transform .38s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+.drawer.show{transform:none}
+.x{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:50%;background:#f5ede2;display:grid;place-items:center;z-index:3}
+.x svg{width:18px;height:18px}
+
+/* detail */
+.det{display:grid;grid-template-columns:1.1fr 1fr}
+.gal{background:#f6eee3;position:relative}
+.gal .main{aspect-ratio:1/1;overflow:hidden;position:relative}
+.gal .main img{width:100%;height:100%;object-fit:cover}
+.gal .nav{position:absolute;top:50%;translate:0 -50%;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center}
+.gal .nav.l{left:10px}.gal .nav.r{right:10px}
+.thumbs{display:flex;gap:8px;padding:10px;overflow-x:auto}
+.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:12px;opacity:.55;cursor:pointer;border:3px solid transparent;flex:none;transition:opacity .2s}
+.thumbs img.on{opacity:1;border-color:var(--red)}
+.dinfo{padding:30px 28px}
+.dinfo .cat{font-size:12px;font-weight:800;color:var(--grape);text-transform:uppercase;letter-spacing:.6px}
+.dinfo h2{font-size:30px;line-height:1.1;margin:6px 0 10px}
+.dinfo .price b{font-size:30px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0}
+.facts div{background:#fbf5ec;border-radius:14px;padding:10px 12px;font-size:13px;color:var(--ink2);font-weight:700}
+.facts b{display:block;color:var(--ink);font-size:15px}
+.desc{color:#4a4160;line-height:1.6;white-space:pre-line}
+.dact{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn{white-space:nowrap;height:50px;padding:0 22px;border-radius:16px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn.red{background:var(--red);color:#fff;flex:1}
+.btn.ink{background:var(--ink);color:#fff}
+.btn.wa{background:#25d366;color:#fff;flex:1}
+.btn.soft{background:#f5ede2}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn svg{width:19px;height:19px}
+
+/* cart */
+.dh{padding:22px 22px 14px;border-bottom:1px solid var(--line)}
+.dh h2{font-size:24px}
+.db{flex:1;overflow:auto;padding:14px 22px}
+.df{border-top:1px solid var(--line);padding:16px 22px 22px;background:#fffdf9}
+.line{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);align-items:center}
+.line img,.line .noimg{width:66px;height:66px;border-radius:14px;object-fit:cover;background:#f6eee3;flex:none}
+.line .t{flex:1;min-width:0}
+.line .t b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.line .t span{font-family:Fredoka,Nunito,sans-serif;color:var(--red2);font-size:16px}
+.line .t em{display:block;font-style:normal;font-size:12px;color:var(--red2);font-weight:800}
+.rm{font-size:12.5px;font-weight:800;color:var(--ink2);text-decoration:underline}
+.sumrow{display:flex;justify-content:space-between;font-weight:700;margin:5px 0;font-size:15px}
+.sumrow.tot{font-family:Fredoka,Nunito,sans-serif;font-size:22px;margin-top:10px}
+.f{display:block;margin-top:12px;font-size:13px;font-weight:800;color:var(--ink2)}
+.f input,.f select,.f textarea{display:block;width:100%;margin-top:5px;border:2px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;font-size:15px;outline:0;transition:border-color .2s;color:var(--ink);font-weight:600}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--red)}
+.f textarea{min-height:90px;resize:vertical}
+.opts{display:grid;gap:8px;margin-top:6px}
+.opt{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:14px;padding:11px 12px;cursor:pointer;font-weight:700;font-size:14px;transition:border-color .2s}
+.opt input{accent-color:var(--red)}
+.opt.on{border-color:var(--red);background:#fff6f5}
+.opt span{margin-left:auto;color:var(--ink2)}
+.err{color:var(--red2);font-weight:800;font-size:13px;min-height:18px;margin-top:8px}
+.note{font-size:12.5px;color:var(--ink2);margin-top:10px;text-align:center}
+
+/* seller editor */
+.ed{padding:28px}
+.ed h2{font-size:26px;margin-bottom:4px}
+.ed .sub{color:var(--ink2);margin-bottom:6px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.photos{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.pt{width:92px;height:92px;border-radius:14px;overflow:hidden;position:relative;background:#f6eee3}
+.pt img{width:100%;height:100%;object-fit:cover}
+.pt button{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(43,33,64,.8);color:#fff;font-size:14px;font-weight:800;display:grid;place-items:center}
+.pt .rmv{top:5px;right:5px}.pt .mv{bottom:5px;left:5px}
+.pt .cover{position:absolute;bottom:5px;right:5px;background:var(--sun);font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px}
+.addph{width:92px;height:92px;border-radius:14px;border:2px dashed #d5c6b2;display:grid;place-items:center;color:var(--ink2);font-weight:800;font-size:12px;text-align:center;cursor:pointer;line-height:1.2}
+.addph svg{width:24px;height:24px;margin:0 auto 4px}
+.spin{width:22px;height:22px;border:3px solid #e8dccb;border-top-color:var(--red);border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.dash{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.dash .kp{flex:1;min-width:120px}
+.dash .kp b{display:block;font-family:Fredoka,Nunito,sans-serif;font-size:26px}
+.dash .kp span{font-size:12.5px;color:var(--ink2);font-weight:800}
+.dash .acts{display:flex;gap:8px;flex-wrap:wrap}
+
+/* toast + banner */
+.toast{position:fixed;left:50%;bottom:26px;translate:-50% 20px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:800;font-size:14px;opacity:0;transition:all .3s;z-index:90;pointer-events:none;max-width:92vw;text-align:center}
+.toast.show{opacity:1;translate:-50% 0}
+.banner{background:#fff3cd;border:2px solid var(--sun);border-radius:16px;padding:12px 16px;margin-top:16px;font-weight:700;font-size:14px}
+.banner:empty{display:none}
+.skel{border-radius:var(--r);background:linear-gradient(90deg,#f3e9db 25%,#fbf4ea 50%,#f3e9db 75%);background-size:200% 100%;animation:sk 1.3s infinite;aspect-ratio:3/4}
+@keyframes sk{to{background-position:-200% 0}}
+
+/* mobile bottom bar */
+.mbar{display:none}
+@media (max-width:760px){
+  .bar{height:60px;gap:8px}
+  .logo{font-size:20px}.logo .mk{width:34px;height:34px}
+  .bar .search{display:none}
+  .msearch{display:flex !important;margin:12px 0 0;max-width:none}
+  .hero{grid-template-columns:1fr;padding:28px 22px;text-align:center;border-radius:24px}
+  .hero p{margin-left:auto;margin-right:auto}
+  .hero .cta,.stats{justify-content:center}
+  .hero-art{display:none}
+  .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .info{padding:10px 11px 12px}.info h3{font-size:14.5px;min-height:36px}
+  .price b{font-size:17px}.price .off{display:none}
+  .add{height:36px;font-size:13px}
+  .how{grid-template-columns:1fr}
+  .det{grid-template-columns:1fr}
+  .modal{top:auto;bottom:0;left:0;width:100%;max-height:94vh;border-radius:26px 26px 0 0;transform:translateY(100%)}
+  .modal.show{transform:none}
+  .dact .btn{flex:1 1 calc(50% - 5px);padding:0 12px}
+  .dinfo{padding:22px 20px 30px}.dinfo h2{font-size:24px}
+  .ed{padding:22px 18px}
+  .row2{grid-template-columns:1fr}
+  .seller-btn{padding:0 12px;font-size:13px}
+  .hide-m{display:none}
+}
+.msearch{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#" id="logo"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3.2"/><circle cx="16" cy="8" r="3.2"/><rect x="5" y="11" width="14" height="9" rx="3"/></svg></span><span id="shopName">Second Play</span></a>
+    <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search toys, brands, characters…" autocomplete="off"></label>
+    <button class="iconbtn" id="favBtn" aria-label="Favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="favCount"></span></button>
+    <button class="iconbtn" id="cartBtn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.4 11.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg><span class="badge" id="cartCount"></span></button>
+    <button class="seller-btn" id="sellerBtn" style="display:none">Seller</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <label class="search msearch"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q2" placeholder="Search toys…" autocomplete="off"></label>
+  <div class="banner" id="banner"></div>
+  <div id="dash"></div>
+
+  <section class="hero" id="hero">
+    <div>
+      <h1 id="heroTitle">Pre-loved toys,<br><span>ready to play again.</span></h1>
+      <p id="heroText">Cars, building sets, games and more, all from my own collection, well cared for and priced to go.</p>
+      <div class="cta"><a class="pill y" href="#shop">Shop the toys</a><button class="pill w" id="howBtn">How buying works</button></div>
+      <div class="stats"><div><b id="stA">0</b>toys available</div><div><b id="stS">0</b>already found new homes</div></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="blob b1"><svg viewBox="0 0 24 24" fill="none" stroke="#2b2140" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="6" rx="2"/><path d="M6 10l2-4h7l3 4"/><circle cx="7.5" cy="17" r="2" fill="#fff"/><circle cx="16.5" cy="17" r="2" fill="#fff"/></svg></div>
+      <div class="blob b2"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="4" y="9" width="16" height="10" rx="1.5"/><circle cx="8.5" cy="7.5" r="1.6"/><circle cx="15.5" cy="7.5" r="1.6"/></svg></div>
+      <div class="blob b3"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="15" cy="8" r="3"/><path d="M6 21v-3a6 6 0 0 1 12 0v3"/></svg></div>
+    </div>
+  </section>
+
+  <div id="shop"></div>
+  <div class="chips" id="chips"></div>
+  <div class="tools">
+    <span class="count" id="count"></span>
+    <select class="sel" id="cond" aria-label="Condition"><option value="">Any condition</option></select>
+    <select class="sel" id="sort" aria-label="Sort">
+      <option value="new">Newest first</option>
+      <option value="lo">Price: low to high</option>
+      <option value="hi">Price: high to low</option>
+      <option value="deal">Biggest discount</option>
+    </select>
+    <label class="tgl"><input type="checkbox" id="showSold">Show sold</label>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <section class="how" id="how">
+    <div><i style="background:var(--red)">1</i><h3>Pick your toys</h3><p>Add what you like to your cart. Every toy is one of a kind, so first come, first served.</p></div>
+    <div><i style="background:var(--sky)">2</i><h3>Send the order</h3><p>Choose pickup or delivery and send your order to me on WhatsApp in one tap.</p></div>
+    <div><i style="background:var(--mint)">3</i><h3>Pay and collect</h3><p id="howPay">I'll confirm it's still available, then you pay by cash, bank transfer, JazzCash or Easypaisa.</p></div>
+  </section>
+  <footer id="foot">Pre-loved toys · one owner · sold with love</footer>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<div class="modal" id="modal"><button class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div id="mbody"></div></div>
+<aside class="drawer" id="drawer"><button class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div id="dbody" style="display:flex;flex-direction:column;height:100%"></div></aside>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const PREV = {};
+const src = id => !id ? "" : PREV[id] ? PREV[id] : /^(data:|https?:|blob:|\/)/.test(String(id)) ? id : (window.__GH ? String(id) : "/_blob/" + encodeURIComponent(id));
+const money = n => "Rs " + Math.round(Number(n) || 0).toLocaleString("en-PK");
+const CATS = ["Cars and vehicles","Building and Lego","Action figures","Dolls and plushies","Board games and puzzles","Outdoor and sports","Electronic and RC","Books and learning","Other"];
+const CONDS = ["Like new","Very good","Good","Well loved"];
+const ICON_TOY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="8" cy="8" r="3.2"/><circle cx="16" cy="8" r="3.2"/><rect x="5" y="11" width="14" height="9" rx="3"/></svg>';
+const HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+const WA = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7a11.5 11.5 0 0 1-4.6-4.1c-.4-.5-1-1.6-1-2.9s.7-2 1-2.3c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.2z"/></svg>';
+
+const S = {
+  toys: [], settings: {}, loaded: false, db: null, assets: null, canEdit: false, seller: false,
+  cat: "All", q: "", cond: "", sort: "new", showSold: false, favOnly: false,
+  cart: load("sp-cart", []), favs: load("sp-favs", []), draft: null
+};
+function load(k, d){ try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch(e) { return d; } }
+function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+
+function toast(t){ const el = $("#toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove("show"), 2300); }
+function setBanner(t){ $("#banner").textContent = t || ""; }
+const cfg = () => Object.assign({
+  name: "Second Play", tagline: "Pre-loved toys, ready to play again.", whatsapp: "", city: "",
+  pickup: "", localFee: 250, courierFee: 400, payments: "Cash, bank transfer, JazzCash or Easypaisa"
+}, S.settings || {});
+
+/* ---------- filtering ---------- */
+function visible(){
+  const q = S.q.trim().toLowerCase();
+  let list = S.toys.filter(t => {
+    if (!S.showSold && t.status === "sold" && !S.seller) return false;
+    if (S.favOnly && !S.favs.includes(t.id)) return false;
+    if (S.cat !== "All" && t.category !== S.cat) return false;
+    if (S.cond && t.condition !== S.cond) return false;
+    if (q && !(`${t.title} ${t.description} ${t.category} ${t.brand||""}`.toLowerCase().includes(q))) return false;
+    return true;
+  });
+  const disc = t => t.was > t.price ? (t.was - t.price) / t.was : 0;
+  const rank = t => t.status === "sold" ? 2 : t.status === "reserved" ? 1 : 0;
+  list.sort((a, b) => {
+    if (rank(a) !== rank(b)) return rank(a) - rank(b);
+    if (S.sort === "lo") return a.price - b.price;
+    if (S.sort === "hi") return b.price - a.price;
+    if (S.sort === "deal") return disc(b) - disc(a);
+    return (b.created || 0) - (a.created || 0);
+  });
+  return list;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const c = cfg();
+  $("#shopName").textContent = c.name; document.title = c.name + " · Pre-loved toys";
+  const parts = String(c.tagline || "").split(",");
+  $("#heroTitle").innerHTML = parts.length > 1 ? esc(parts[0]) + ",<br><span>" + esc(parts.slice(1).join(",").trim()) + "</span>" : "<span>" + esc(c.tagline) + "</span>";
+  $("#howPay").textContent = "I'll confirm it's still available, then you pay by " + (c.payments || "cash").replace(/\.$/, "") + ".";
+  $("#foot").textContent = c.name + " · pre-loved toys" + (c.city ? " · " + c.city : "") + " · sold with love";
+  $("#stA").textContent = S.toys.filter(t => t.status !== "sold").length;
+  $("#stS").textContent = S.toys.filter(t => t.status === "sold").length;
+  $("#sellerBtn").style.display = S.canEdit ? "" : "none";
+  $("#sellerBtn").classList.toggle("on", S.seller);
+  $("#sellerBtn").textContent = S.seller ? "Done" : "Seller";
+  $("#favBtn").classList.toggle("on", S.favOnly);
+  renderDash(); renderChips(); renderGrid(); counts();
+}
+function renderDash(){
+  const d = $("#dash");
+  if (!S.seller) { d.innerHTML = ""; return; }
+  const sold = S.toys.filter(t => t.status === "sold"), live = S.toys.filter(t => t.status !== "sold");
+  d.innerHTML = `<div class="dash">
+    <div class="kp"><b>${live.length}</b><span>For sale</span></div>
+    <div class="kp"><b>${sold.length}</b><span>Sold</span></div>
+    <div class="kp"><b>${money(sold.reduce((a, t) => a + (Number(t.soldFor) || Number(t.price) || 0), 0))}</b><span>Earned so far</span></div>
+    <div class="kp"><b>${money(live.reduce((a, t) => a + (Number(t.price) || 0), 0))}</b><span>Still to sell</span></div>
+    <div class="acts"><button class="btn red" id="addToy" style="flex:none">+ Add a toy</button><button class="btn soft" id="settingsBtn">Shop settings</button></div></div>
+    ${!cfg().whatsapp ? `<div class="banner">Add your WhatsApp number in <b>Shop settings</b> so buyers can send you orders.</div>` : ""}`;
+  $("#addToy").onclick = () => openEditor();
+  $("#settingsBtn").onclick = openSettings;
+}
+function renderChips(){
+  const used = ["All", ...CATS.filter(c => S.toys.some(t => t.category === c))];
+  $("#chips").innerHTML = used.map(c => `<button class="chip ${S.cat === c ? "on" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+  $("#chips").querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { S.cat = b.dataset.cat; render(); });
+}
+function card(t, i){
+  const inCart = S.cart.includes(t.id), fav = S.favs.includes(t.id), img = (t.photos || [])[0];
+  const off = t.was > t.price ? Math.round((1 - t.price / t.was) * 100) : 0;
+  const fresh = Date.now() - (t.created || 0) < 5 * 864e5 && t.status === "available";
+  const tag = t.status === "sold" ? `<span class="tag sold">Sold</span>` : t.status === "reserved" ? `<span class="tag reserved">Reserved</span>` : fresh ? `<span class="tag new">Just added</span>` : "";
+  return `<article class="card ${t.status === "sold" ? "is-sold" : ""}" data-id="${t.id}" style="animation-delay:${Math.min(i, 12) * 40}ms">
+    <div class="ph">${img ? `<img src="${esc(src(img))}" alt="${esc(t.title)}" loading="lazy">` : `<div class="noimg">${ICON_TOY}</div>`}${tag}
+      <button class="heart ${fav ? "on" : ""}" data-fav="${t.id}" aria-label="Save">${HEART}</button></div>
+    <div class="info"><h3>${esc(t.title)}</h3><div class="meta">${esc(t.condition || "")}${t.age ? " · Ages " + esc(t.age) : ""}</div>
+      <div class="price"><b>${money(t.price)}</b>${t.was > t.price ? `<s>${money(t.was)}</s><span class="off">-${off}%</span>` : ""}</div>
+      ${S.seller ? `<div class="own"><button data-edit="${t.id}">Edit</button><button data-sold="${t.id}">${t.status === "sold" ? "Relist" : "Sold"}</button><button class="del" data-del="${t.id}">Delete</button></div>`
+        : `<button class="add ${inCart ? "in" : ""}" data-add="${t.id}" ${t.status !== "available" ? "disabled" : ""}>${t.status === "sold" ? "Sold" : t.status === "reserved" ? "Reserved" : inCart ? "✓ In cart" : "Add to cart"}</button>`}
+    </div></article>`;
+}
+function renderGrid(){
+  const g = $("#grid");
+  if (!S.loaded) { g.innerHTML = Array(8).fill('<div class="skel"></div>').join(""); $("#count").textContent = ""; return; }
+  const list = visible();
+  $("#count").textContent = S.favOnly ? `${list.length} saved` : `${list.length} toy${list.length === 1 ? "" : "s"}`;
+  if (!list.length) {
+    g.innerHTML = `<div class="empty" style="grid-column:1/-1">${ICON_TOY}<h3>${S.toys.length ? "No toys match" : S.seller ? "Your shop is empty" : "New toys coming soon"}</h3>
+      <p>${S.toys.length ? "Try another category or search." : S.seller ? "Tap “+ Add a toy” to list your first one." : "Check back in a little while."}</p></div>`;
+    return;
+  }
+  g.innerHTML = list.map(card).join("");
+}
+function counts(){
+  S.cart = S.cart.filter(id => S.toys.some(t => t.id === id && t.status === "available") || !S.loaded);
+  $("#cartCount").textContent = S.cart.length || "";
+  $("#favCount").textContent = S.favs.length || "";
+}
+
+/* ---------- grid events ---------- */
+$("#grid").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (b) {
+    e.stopPropagation();
+    if (b.dataset.fav) return toggleFav(b.dataset.fav);
+    if (b.dataset.add) return addToCart(b.dataset.add);
+    if (b.dataset.edit) return openEditor(b.dataset.edit);
+    if (b.dataset.sold) return toggleSold(b.dataset.sold);
+    if (b.dataset.del) return delToy(b.dataset.del);
+    return;
+  }
+  const c = e.target.closest(".card"); if (c) location.hash = "t-" + c.dataset.id;
+});
+function toggleFav(id){ const i = S.favs.indexOf(id); if (i >= 0) S.favs.splice(i, 1); else { S.favs.push(id); toast("Saved to favourites"); } save("sp-favs", S.favs); render(); refreshDetail(); }
+function addToCart(id){
+  const t = S.toys.find(x => x.id === id); if (!t || t.status !== "available") return;
+  if (S.cart.includes(id)) { openCart(); return; }
+  S.cart.push(id); save("sp-cart", S.cart); render(); refreshDetail(); toast("Added to cart");
+  const cb = $("#cartBtn"); cb.animate([{transform:"scale(1)"},{transform:"scale(1.25)"},{transform:"scale(1)"}], {duration:380});
+}
+
+/* ---------- overlays ---------- */
+function openModal(html){ $("#mbody").innerHTML = html; $("#modal").classList.add("show"); $("#scrim").classList.add("show"); $("#modal").scrollTop = 0; document.body.style.overflow = "hidden"; }
+function openDrawer(html){ $("#dbody").innerHTML = html; $("#drawer").classList.add("show"); $("#scrim").classList.add("show"); document.body.style.overflow = "hidden"; }
+function closeAll(){
+  $("#modal").classList.remove("show"); $("#drawer").classList.remove("show"); $("#scrim").classList.remove("show"); document.body.style.overflow = "";
+  S.draft = null;
+  if (location.hash.startsWith("#t-")) history.replaceState(null, "", location.pathname + location.search);
+}
+$("#scrim").onclick = closeAll;
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = closeAll);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeAll(); });
+
+/* ---------- detail ---------- */
+let gi = 0;
+function openDetail(id){
+  const t = S.toys.find(x => x.id === id); if (!t) return;
+  gi = 0; openModal(detailHTML(t)); wireDetail(t);
+}
+function refreshDetail(){
+  const m = location.hash.match(/^#t-(.+)/); if (!m || !$("#modal").classList.contains("show") || S.draft) return;
+  const t = S.toys.find(x => x.id === m[1]); if (!t) return;
+  $("#mbody").innerHTML = detailHTML(t); wireDetail(t);
+}
+function detailHTML(t){
+  const ph = t.photos || [], inCart = S.cart.includes(t.id), fav = S.favs.includes(t.id);
+  const avail = t.status === "available";
+  return `<div class="det">
+    <div class="gal"><div class="main" id="gmain">${ph.length ? `<img src="${esc(src(ph[gi]))}" alt="${esc(t.title)}">` : `<div class="noimg">${ICON_TOY}</div>`}
+      ${ph.length > 1 ? `<button class="nav l" data-g="-1" aria-label="Previous">‹</button><button class="nav r" data-g="1" aria-label="Next">›</button>` : ""}</div>
+      ${ph.length > 1 ? `<div class="thumbs">${ph.map((p, i) => `<img src="${esc(src(p))}" data-gi="${i}" class="${i === gi ? "on" : ""}" alt="">`).join("")}</div>` : ""}</div>
+    <div class="dinfo"><div class="cat">${esc(t.category || "Toy")}</div><h2>${esc(t.title)}</h2>
+      <div class="price"><b>${money(t.price)}</b>${t.was > t.price ? `<s>${money(t.was)} new</s><span class="off">-${Math.round((1 - t.price / t.was) * 100)}%</span>` : ""}</div>
+      ${t.status !== "available" ? `<div class="banner" style="margin-top:12px">${t.status === "sold" ? "This toy has found a new home." : "Someone has reserved this toy. Message me to join the waiting list."}</div>` : ""}
+      <div class="facts">
+        <div>Condition<b>${esc(t.condition || "Good")}</b></div>
+        <div>Ages<b>${esc(t.age || "All ages")}</b></div>
+        ${t.brand ? `<div>Brand<b>${esc(t.brand)}</b></div>` : ""}
+        <div>Box and parts<b>${esc(t.box || "Not stated")}</b></div>
+      </div>
+      <p class="desc">${esc(t.description || "")}</p>
+      <div class="dact">
+        ${avail ? `<button class="btn red" id="dAdd">${inCart ? "✓ In cart · view cart" : "Add to cart"}</button>` : ""}
+        <button class="btn soft" id="dFav" aria-label="Save">${fav ? "♥ Saved" : "♡ Save"}</button>
+        <button class="btn wa" id="dAsk">${WA} ${avail ? "Ask about it" : "Message me"}</button>
+        <button class="btn soft" id="dShare">Share</button>
+      </div></div></div>`;
+}
+function wireDetail(t){
+  const ph = t.photos || [];
+  const show = i => { gi = (i + ph.length) % ph.length; const m = $("#gmain img"); if (m) { m.style.opacity = .3; m.src = src(ph[gi]); m.onload = () => m.style.opacity = 1; } document.querySelectorAll("[data-gi]").forEach(el => el.classList.toggle("on", +el.dataset.gi === gi)); };
+  document.querySelectorAll("[data-g]").forEach(b => b.onclick = () => show(gi + +b.dataset.g));
+  document.querySelectorAll("[data-gi]").forEach(b => b.onclick = () => show(+b.dataset.gi));
+  const gm = $("#gmain"); let sx = null;
+  if (gm && ph.length > 1) { gm.addEventListener("touchstart", e => sx = e.touches[0].clientX, {passive:true}); gm.addEventListener("touchend", e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(gi + (dx < 0 ? 1 : -1)); sx = null; }); }
+  if ($("#gmain img")) $("#gmain img").style.transition = "opacity .25s";
+  const a = $("#dAdd"); if (a) a.onclick = () => S.cart.includes(t.id) ? openCart() : addToCart(t.id);
+  $("#dFav").onclick = () => toggleFav(t.id);
+  $("#dAsk").onclick = () => wa(`Hi! I'm interested in "${t.title}" (${money(t.price)}). Is it still available?\n${shareUrl(t)}`);
+  $("#dShare").onclick = async () => { const u = shareUrl(t); try { if (navigator.share) await navigator.share({title: t.title, text: `${t.title} · ${money(t.price)}`, url: u}); else { await navigator.clipboard.writeText(u); toast("Link copied"); } } catch(e) {} };
+}
+const shareUrl = t => location.href.split("#")[0] + "#t-" + t.id;
+function wa(text){
+  const n = String(cfg().whatsapp || "").replace(/[^\d]/g, "").replace(/^0/, "92");
+  if (!n) { toast("The seller hasn't added a WhatsApp number yet"); return false; }
+  window.open("https://wa.me/" + n + "?text=" + encodeURIComponent(text), "_blank");
+  return true;
+}
+
+/* ---------- favourites + cart ---------- */
+$("#favBtn").onclick = () => { S.favOnly = !S.favOnly; if (S.favOnly) toast(S.favs.length ? "Showing your saved toys" : "Tap ♡ on a toy to save it"); render(); document.getElementById("shop").scrollIntoView({behavior:"smooth"}); };
+$("#cartBtn").onclick = openCart;
+S.ship = load("sp-ship", "pickup"); S.buyer = load("sp-buyer", {name:"", phone:"", address:"", note:""});
+function openCart(){
+  if (location.hash.startsWith("#t-")) history.replaceState(null, "", location.pathname);
+  $("#modal").classList.remove("show");
+  const c = cfg(), items = S.cart.map(id => S.toys.find(t => t.id === id)).filter(Boolean);
+  const fee = S.ship === "local" ? +c.localFee || 0 : S.ship === "courier" ? +c.courierFee || 0 : 0;
+  const sub = items.reduce((a, t) => a + (+t.price || 0), 0);
+  openDrawer(`<div class="dh"><h2>Your cart</h2><div class="meta">${items.length} toy${items.length === 1 ? "" : "s"} · each one is one of a kind</div></div>
+    <div class="db">${items.length ? items.map(t => `<div class="line">${t.photos && t.photos[0] ? `<img src="${esc(src(t.photos[0]))}" alt="">` : `<div class="noimg">${ICON_TOY}</div>`}
+        <div class="t"><b>${esc(t.title)}</b><span>${money(t.price)}</span>${t.status !== "available" ? `<em>No longer available</em>` : ""}</div><button class="rm" data-rm="${t.id}">Remove</button></div>`).join("")
+      : `<div class="empty" style="padding:40px 10px">${ICON_TOY}<h3>Your cart is empty</h3><p>Find something fun to take home.</p><button class="btn ink" data-close2 style="margin-top:14px">Browse toys</button></div>`}
+      ${items.length ? `<div style="margin-top:16px"><div class="f">How would you like to get it?</div><div class="opts">
+        <label class="opt ${S.ship === "pickup" ? "on" : ""}"><input type="radio" name="ship" value="pickup" ${S.ship === "pickup" ? "checked" : ""}>Pick up${c.pickup ? " from " + esc(c.pickup) : ""}<span>Free</span></label>
+        <label class="opt ${S.ship === "local" ? "on" : ""}"><input type="radio" name="ship" value="local" ${S.ship === "local" ? "checked" : ""}>Delivery in ${esc(c.city || "my city")}<span>${money(c.localFee)}</span></label>
+        <label class="opt ${S.ship === "courier" ? "on" : ""}"><input type="radio" name="ship" value="courier" ${S.ship === "courier" ? "checked" : ""}>Courier to another city<span>${money(c.courierFee)}</span></label></div>
+        <label class="f">Your name<input id="bName" value="${esc(S.buyer.name)}" autocomplete="name"></label>
+        <label class="f">Phone / WhatsApp<input id="bPhone" value="${esc(S.buyer.phone)}" inputmode="tel" autocomplete="tel"></label>
+        ${S.ship !== "pickup" ? `<label class="f">Delivery address<textarea id="bAddr" autocomplete="street-address">${esc(S.buyer.address)}</textarea></label>` : ""}
+        <label class="f">Note (optional)<input id="bNote" value="${esc(S.buyer.note)}" placeholder="e.g. best time to call"></label></div>` : ""}
+    </div>
+    ${items.length ? `<div class="df"><div class="sumrow"><span>Toys</span><span>${money(sub)}</span></div><div class="sumrow"><span>${S.ship === "pickup" ? "Pickup" : "Delivery"}</span><span>${fee ? money(fee) : "Free"}</span></div>
+      <div class="sumrow tot"><span>Total</span><span>${money(sub + fee)}</span></div>
+      <div class="err" id="cErr"></div><button class="btn wa" id="sendOrder" style="width:100%">${WA} Send order on WhatsApp</button>
+      <div class="note">Nothing is charged here. I'll confirm on WhatsApp, then you pay by ${esc(c.payments)}.</div></div>` : ""}`);
+  document.querySelectorAll("[data-close2]").forEach(b => b.onclick = closeAll);
+  document.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => { S.cart = S.cart.filter(x => x !== b.dataset.rm); save("sp-cart", S.cart); render(); openCart(); });
+  const keep = () => { const v = id => ($(id) || {}).value; S.buyer = {name: v("#bName") ?? S.buyer.name, phone: v("#bPhone") ?? S.buyer.phone, address: v("#bAddr") ?? S.buyer.address, note: v("#bNote") ?? S.buyer.note}; save("sp-buyer", S.buyer); };
+  document.querySelectorAll("[name=ship]").forEach(r => r.onchange = () => { keep(); S.ship = r.value; save("sp-ship", S.ship); openCart(); });
+  ["#bName","#bPhone","#bAddr","#bNote"].forEach(id => { const el = $(id); if (el) el.oninput = keep; });
+  const so = $("#sendOrder");
+  if (so) so.onclick = () => {
+    keep(); const b = S.buyer;
+    const ok = items.filter(t => t.status === "available");
+    if (!ok.length) return $("#cErr").textContent = "These toys are no longer available.";
+    if (!b.name.trim()) return $("#cErr").textContent = "Please add your name.";
+    if (!/\d{7,}/.test(b.phone.replace(/\D/g, ""))) return $("#cErr").textContent = "Please add a phone number I can reach you on.";
+    if (S.ship !== "pickup" && !b.address.trim()) return $("#cErr").textContent = "Please add your delivery address.";
+    const subOk = ok.reduce((a, t) => a + (+t.price || 0), 0);
+    const msg = [`Hi! I'd like to order from ${c.name}:`, "", ...ok.map((t, i) => `${i + 1}. ${t.title} · ${money(t.price)}`), "",
+      `Toys: ${money(subOk)}`, `${S.ship === "pickup" ? "Pickup" : S.ship === "local" ? "Local delivery" : "Courier"}: ${fee ? money(fee) : "Free"}`, `Total: ${money(subOk + fee)}`, "",
+      `Name: ${b.name}`, `Phone: ${b.phone}`, ...(S.ship !== "pickup" ? [`Address: ${b.address}`] : []), ...(b.note ? [`Note: ${b.note}`] : [])].join("\n");
+    if (wa(msg)) { S.cart = []; save("sp-cart", S.cart); render(); closeAll(); toast("Order sent! I'll reply on WhatsApp soon."); }
+  };
+}
+
+/* ---------- seller tools ---------- */
+$("#sellerBtn").onclick = () => { S.seller = !S.seller; S.favOnly = false; render(); if (S.seller) toast("Seller mode: add, edit and mark toys sold"); };
+function openEditor(id){
+  const t = id ? S.toys.find(x => x.id === id) : null;
+  S.draft = t ? JSON.parse(JSON.stringify(t)) : {title:"", price:"", was:"", category:CATS[0], condition:CONDS[1], age:"", brand:"", box:"Complete, no box", description:"", photos:[], status:"available"};
+  S.draft._id = id || null;
+  openModal(`<form class="ed" id="edForm"><h2>${t ? "Edit toy" : "Add a toy"}</h2><p class="sub">Good photos sell toys. Use daylight and a plain background.</p>
+    <div class="f">Photos (the first one is the cover)</div><div class="photos" id="photos"></div>
+    <input type="file" id="file" accept="image/*" multiple hidden>
+    <label class="f">Name of the toy<input name="title" required maxlength="80" placeholder="e.g. Hot Wheels track set with 6 cars" value="${esc(S.draft.title)}"></label>
+    <div class="row2"><label class="f">Your price (Rs)<input name="price" type="number" min="0" required value="${esc(S.draft.price)}"></label>
+      <label class="f">Price when new (optional)<input name="was" type="number" min="0" value="${esc(S.draft.was)}"></label></div>
+    <div class="row2"><label class="f">Category<select name="category">${CATS.map(c => `<option ${c === S.draft.category ? "selected" : ""}>${c}</option>`).join("")}</select></label>
+      <label class="f">Condition<select name="condition">${CONDS.map(c => `<option ${c === S.draft.condition ? "selected" : ""}>${c}</option>`).join("")}</select></label></div>
+    <div class="row2"><label class="f">Ages<input name="age" placeholder="e.g. 5+" value="${esc(S.draft.age)}"></label>
+      <label class="f">Brand (optional)<input name="brand" placeholder="e.g. LEGO, Mattel" value="${esc(S.draft.brand)}"></label></div>
+    <div class="row2"><label class="f">Box and parts<select name="box">${["Complete, with box","Complete, no box","Some parts missing","Not stated"].map(c => `<option ${c === S.draft.box ? "selected" : ""}>${c}</option>`).join("")}</select></label>
+      <label class="f">Status<select name="status">${[["available","For sale"],["reserved","Reserved"],["sold","Sold"]].map(([v, l]) => `<option value="${v}" ${v === S.draft.status ? "selected" : ""}>${l}</option>`).join("")}</select></label></div>
+    <label class="f">Short description<textarea name="description" maxlength="600" placeholder="What is it, what's included, any marks or missing pieces, why it's fun.">${esc(S.draft.description)}</textarea></label>
+    <div class="err" id="eErr"></div>
+    <div class="dact"><button class="btn red" type="submit" id="eSave">${t ? "Save changes" : "List this toy"}</button><button class="btn soft" type="button" data-cancel>Cancel</button></div></form>`);
+  drawPhotos();
+  $("#file").onchange = e => { uploadPhotos([...e.target.files]); e.target.value = ""; };
+  $("[data-cancel]").onclick = closeAll;
+  $("#edForm").onsubmit = saveToy;
+}
+function drawPhotos(){
+  const d = S.draft;
+  $("#photos").innerHTML = d.photos.map((p, i) => `<div class="pt"><img src="${esc(src(p))}" alt=""><button type="button" class="rmv" data-prm="${i}" aria-label="Remove">×</button>${i ? `<button type="button" class="mv" data-pmv="${i}" aria-label="Make cover">↖</button>` : `<span class="cover">Cover</span>`}</div>`).join("")
+    + (d._up ? `<div class="pt" style="display:grid;place-items:center"><div class="spin"></div></div>` : "")
+    + (d.photos.length < 8 ? `<div class="addph" id="addph"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add photos</div></div>` : "");
+  const a = $("#addph"); if (a) a.onclick = () => $("#file").click();
+  document.querySelectorAll("[data-prm]").forEach(b => b.onclick = () => { d.photos.splice(+b.dataset.prm, 1); drawPhotos(); });
+  document.querySelectorAll("[data-pmv]").forEach(b => b.onclick = () => { const [p] = d.photos.splice(+b.dataset.pmv, 1); d.photos.unshift(p); drawPhotos(); });
+}
+function shrink(file){
+  return new Promise((res, rej) => {
+    const img = new Image(), u = URL.createObjectURL(file);
+    img.onload = () => {
+      const M = 1400, k = Math.min(1, M / Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u);
+      c.toBlob(b => b ? res(b) : rej(new Error("Couldn't read photo")), "image/jpeg", .84);
+    };
+    img.onerror = () => { URL.revokeObjectURL(u); rej(new Error("That file isn't a photo")); };
+    img.src = u;
+  });
+}
+async function uploadPhotos(files){
+  const d = S.draft; if (!S.assets) { toast("Photo upload isn't available here"); return; }
+  for (const f of files.slice(0, 8 - d.photos.length)) {
+    d._up = true; drawPhotos();
+    try { const b = await shrink(f); const r = await S.assets.upload(b); if (S.draft === d) d.photos.push(r.id); }
+    catch(e) { toast("A photo didn't upload: " + (e.message || "try again")); }
+  }
+  d._up = false; if (S.draft === d) drawPhotos();
+}
+async function saveToy(e){
+  e.preventDefault(); const d = S.draft, f = new FormData(e.target);
+  if (d._up) return $("#eErr").textContent = "Wait for the photos to finish uploading.";
+  const t = {
+    title: f.get("title").trim(), price: Math.max(0, +f.get("price") || 0), was: +f.get("was") || 0,
+    category: f.get("category"), condition: f.get("condition"), age: f.get("age").trim(), brand: f.get("brand").trim(),
+    box: f.get("box"), status: f.get("status"), description: f.get("description").trim(), photos: d.photos,
+    created: d.created || Date.now(), updated: Date.now()
+  };
+  if (!t.title) return $("#eErr").textContent = "Give the toy a name.";
+  if (t.status === "sold" && !d.soldFor) t.soldFor = t.price; else if (d.soldFor) t.soldFor = d.soldFor;
+  const btn = $("#eSave"); btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    const id = d._id || ("t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6));
+    await S.db.collection("toys").doc(id).set(t);
+    closeAll(); toast(window.__GH ? (d._id ? "Saved. Buyers see it in about a minute." : "Listed! Buyers see it in about a minute.") : (d._id ? "Saved" : "Listed! It's live in your shop."));
+  } catch(err) { btn.disabled = false; btn.textContent = "Try again"; $("#eErr").textContent = "Couldn't save: " + (err.message || err); }
+}
+async function toggleSold(id){
+  const t = S.toys.find(x => x.id === id); if (!t) return;
+  const sold = t.status !== "sold";
+  try { await S.db.collection("toys").doc(id).update(sold ? {status:"sold", soldFor: t.price, soldAt: Date.now()} : {status:"available"}); toast(sold ? "Marked as sold 🎉" : "Back on sale"); }
+  catch(e) { toast("Couldn't update: " + (e.message || e)); }
+}
+async function delToy(id){
+  const t = S.toys.find(x => x.id === id); if (!t) return;
+  if (!confirm(`Delete “${t.title}” from the shop? This can't be undone.`)) return;
+  try { await S.db.collection("toys").doc(id).delete(); toast("Deleted"); } catch(e) { toast("Couldn't delete: " + (e.message || e)); }
+}
+function openSettings(){
+  const c = cfg();
+  openModal(`<form class="ed" id="stForm"><h2>Shop settings</h2><p class="sub">This is what buyers see, and where their orders go.</p>
+    <div class="row2"><label class="f">Shop name<input name="name" maxlength="40" value="${esc(c.name)}"></label>
+      <label class="f">Your WhatsApp number<input name="whatsapp" inputmode="tel" placeholder="03xx xxxxxxx" value="${esc(c.whatsapp)}"></label></div>
+    <label class="f">Headline (a comma starts the coloured part)<input name="tagline" maxlength="70" value="${esc(c.tagline)}"></label>
+    <div class="row2"><label class="f">Your city<input name="city" placeholder="e.g. Islamabad" value="${esc(c.city)}"></label>
+      <label class="f">Pickup area<input name="pickup" placeholder="e.g. DHA Phase 2" value="${esc(c.pickup)}"></label></div>
+    <div class="row2"><label class="f">Delivery fee in your city (Rs)<input name="localFee" type="number" min="0" value="${esc(c.localFee)}"></label>
+      <label class="f">Courier fee, other cities (Rs)<input name="courierFee" type="number" min="0" value="${esc(c.courierFee)}"></label></div>
+    <label class="f">How buyers can pay<input name="payments" value="${esc(c.payments)}"></label>
+    <div class="err" id="sErr"></div>
+    <div class="dact"><button class="btn red" type="submit" id="sSave">Save settings</button><button class="btn soft" type="button" data-cancel>Cancel</button>${window.__GH ? `<button class="btn soft" type="button" id="signOut">Sign out</button>` : ""}</div></form>`);
+  $("[data-cancel]").onclick = closeAll;
+  if ($("#signOut")) $("#signOut").onclick = () => { try { localStorage.removeItem("sp-token"); } catch(e) {} GH.token = null; S.canEdit = false; S.seller = false; closeAll(); render(); toast("Signed out"); };
+  $("#stForm").onsubmit = async e => {
+    e.preventDefault(); const f = new FormData(e.target), o = {};
+    for (const [k, v] of f.entries()) o[k] = ["localFee","courierFee"].includes(k) ? Math.max(0, +v || 0) : String(v).trim();
+    if (o.whatsapp && o.whatsapp.replace(/\D/g, "").length < 10) return $("#sErr").textContent = "That WhatsApp number looks too short.";
+    const b = $("#sSave"); b.disabled = true; b.textContent = "Saving…";
+    try { await S.db.doc("shop/settings").set(o); closeAll(); toast("Settings saved"); }
+    catch(err) { b.disabled = false; b.textContent = "Try again"; $("#sErr").textContent = "Couldn't save: " + (err.message || err); }
+  };
+}
+
+/* ---------- toolbar ---------- */
+CONDS.forEach(c => $("#cond").insertAdjacentHTML("beforeend", `<option>${c}</option>`));
+const onQ = v => { S.q = v; $("#q").value = v; $("#q2").value = v; clearTimeout(onQ._t); onQ._t = setTimeout(renderGrid, 120); };
+$("#q").oninput = e => onQ(e.target.value);
+$("#q2").oninput = e => onQ(e.target.value);
+$("#cond").onchange = e => { S.cond = e.target.value; renderGrid(); };
+$("#sort").onchange = e => { S.sort = e.target.value; renderGrid(); };
+$("#showSold").onchange = e => { S.showSold = e.target.checked; renderGrid(); };
+$("#howBtn").onclick = () => $("#how").scrollIntoView({behavior:"smooth"});
+$("#logo").onclick = e => { e.preventDefault(); S.cat = "All"; S.favOnly = false; onQ(""); closeAll(); render(); scrollTo({top:0, behavior:"smooth"}); };
+
+function route(){ if (location.hash === "#seller" && window.__GH) return openSellerLogin(); const m = location.hash.match(/^#t-(.+)/); if (m && S.loaded) openDetail(m[1]); }
+window.addEventListener("hashchange", route);
+
+
+/* ---------- GitHub Pages mode: anyone can shop; the seller edits with a GitHub token ---------- */
+const GH = {data: {settings:{}, toys:{}}, token: null, owner: "", repo: "", branch: "main", q: Promise.resolve()};
+function ghRepo(){
+  if (window.SP_REPO) return window.SP_REPO;
+  const h = location.hostname, m = h.match(/^([^.]+)\.github\.io$/i);
+  if (!m) return null;
+  const seg = location.pathname.split("/").filter(Boolean)[0];
+  return {owner: m[1], repo: (!seg || /\.html?$/.test(seg)) ? m[1] + ".github.io" : seg};
+}
+const b64 = str => btoa(unescape(encodeURIComponent(str)));
+const blobB64 = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = rej; r.readAsDataURL(b); });
+async function api(path, opt = {}){
+  const r = await fetch("https://api.github.com/repos/" + GH.owner + "/" + GH.repo + path, Object.assign({}, opt, {headers: Object.assign({"Accept":"application/vnd.github+json", "Authorization":"Bearer " + GH.token}, opt.headers || {})}));
+  if (!r.ok) { let m = r.status + ""; try { m = (await r.json()).message || m; } catch(e) {} const er = new Error(m); er.status = r.status; throw er; }
+  return r.status === 204 ? null : r.json();
+}
+async function putFile(path, contentB64, message){
+  let sha;
+  try { sha = (await api("/contents/" + path + "?ref=" + GH.branch + "&t=" + Date.now())).sha; } catch(e) { if (e.status !== 404) throw e; }
+  return api("/contents/" + path, {method:"PUT", body: JSON.stringify({message, content: contentB64, branch: GH.branch, sha})});
+}
+function ghApply(){
+  S.toys = Object.entries(GH.data.toys || {}).map(([id, t]) => Object.assign({id}, t));
+  S.settings = GH.data.settings || {}; S.loaded = true; render(); refreshDetail();
+}
+function ghSave(msg){
+  ghApply();
+  const snap = JSON.stringify(GH.data, null, 2);
+  const job = GH.q.then(() => putFile("toys.json", b64(snap), msg));
+  GH.q = job.catch(() => {});
+  return job.then(() => { try { localStorage.setItem("sp-local", JSON.stringify({at: Date.now(), data: GH.data})); } catch(e) {} });
+}
+const ghDB = {
+  collection: c => ({ doc: id => ({
+    set: d => { const had = !!GH.data.toys[id]; GH.data.toys[id] = d; return ghSave((had ? "Update " : "Add ") + (d.title || id)); },
+    update: d => { GH.data.toys[id] = Object.assign({}, GH.data.toys[id], d); return ghSave("Update " + (GH.data.toys[id].title || id)); },
+    delete: () => { const t = GH.data.toys[id]; delete GH.data.toys[id]; return ghSave("Remove " + ((t && t.title) || id)); }
+  }) }),
+  doc: () => ({ set: d => { GH.data.settings = d; return ghSave("Update shop settings"); } })
+};
+const ghAssets = { async upload(b){
+  const name = "photos/" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) + ".jpg";
+  const job = GH.q.then(async () => putFile(name, await blobB64(b), "Add photo"));
+  GH.q = job.catch(() => {});
+  await job; PREV[name] = URL.createObjectURL(b); return {id: name};
+} };
+async function ghLogin(token, quiet){
+  GH.token = token;
+  try {
+    const r = await api("");
+    if (!r.permissions || !r.permissions.push) throw new Error("This token can't edit " + GH.repo);
+    GH.branch = r.default_branch || "main";
+    try { const f = await api("/contents/toys.json?ref=" + GH.branch + "&t=" + Date.now()); GH.data = JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g, ""))))); } catch(e) { if (e.status !== 404) throw e; }
+    GH.data.toys = GH.data.toys || {}; GH.data.settings = GH.data.settings || {};
+    try { localStorage.setItem("sp-token", token); } catch(e) {}
+    S.db = ghDB; S.assets = ghAssets; S.canEdit = true; ghApply();
+    if (!quiet) { closeAll(); S.seller = true; render(); toast("Signed in as the seller"); }
+    return true;
+  } catch(e) {
+    GH.token = null; if (quiet) { try { localStorage.removeItem("sp-token"); } catch(_) {} }
+    if (!quiet) { const el = $("#gErr"); if (el) el.textContent = e.status === 401 ? "That token isn't valid. Copy it again from GitHub." : e.status === 404 ? "This token can't see the " + GH.repo + " repository. Give it access to that repo." : (e.message || "Couldn't sign in."); }
+    return false;
+  }
+}
+function openSellerLogin(){
+  if (S.canEdit) { S.seller = true; render(); return; }
+  openModal(`<form class="ed" id="gForm"><h2>Seller sign-in</h2><p class="sub">Paste your GitHub access token. It stays on this device only, so you sign in once per phone or laptop.</p>
+    <label class="f">GitHub token<input id="gTok" type="password" autocomplete="off" placeholder="github_pat_…" required></label>
+    <div class="err" id="gErr"></div>
+    <div class="dact"><button class="btn red" type="submit" id="gGo">Sign in</button><button class="btn soft" type="button" data-cancel>Cancel</button></div>
+    <p class="note">Need a token? GitHub → Settings → Developer settings → Fine-grained tokens → choose only the ${esc(GH.repo || "shop")} repository → Contents: Read and write.</p></form>`);
+  $("[data-cancel]").onclick = closeAll;
+  $("#gForm").onsubmit = async e => { e.preventDefault(); const b = $("#gGo"); b.disabled = true; b.textContent = "Checking…"; if (!(await ghLogin($("#gTok").value.trim()))) { b.disabled = false; b.textContent = "Sign in"; } };
+}
+async function bootGitHub(){
+  window.__GH = true;
+  const r = ghRepo(); if (r) { GH.owner = r.owner; GH.repo = r.repo; }
+  const foot = $("#foot");
+  foot.insertAdjacentHTML("afterend", `<p style="text-align:center;padding-bottom:20px"><button id="sellerLink" style="font-size:12px;color:var(--ink2);text-decoration:underline">Seller sign-in</button></p>`);
+  $("#sellerLink").onclick = openSellerLogin;
+  try { const d = await (await fetch("toys.json?t=" + Date.now(), {cache:"no-store"})).json(); GH.data = {settings: d.settings || {}, toys: d.toys || {}}; }
+  catch(e) { GH.data = {settings:{}, toys:{}}; }
+  try { const loc = JSON.parse(localStorage.getItem("sp-local") || "null"); if (loc && Date.now() - loc.at < 10 * 60e3) GH.data = loc.data; } catch(e) {}
+  ghApply();
+  let tok = null; try { tok = localStorage.getItem("sp-token"); } catch(e) {}
+  if (tok && GH.owner) await ghLogin(tok, true);
+  if (location.hash === "#seller") openSellerLogin(); else route();
+}
+
+/* ---------- boot ---------- */
+render();
+(async () => {
+  if (!window.claude || !window.claude.use) return bootGitHub();
+  const [db, user, assets] = await Promise.all([claude.use("db"), claude.use("user"), claude.use("assets")]);
+  S.db = db; S.assets = assets;
+  try { S.canEdit = !!(user && await user.canEdit()); } catch(e) { S.canEdit = false; }
+  if (!db) { S.loaded = true; setBanner("Sign in to claude.ai to browse the toys."); render(); return; }
+  const timer = setTimeout(() => { if (!S.loaded) { S.loaded = true; setBanner("The shop is taking a while to load. Check your connection."); render(); } }, 10000);
+  db.collection("toys").onSnapshot(snap => {
+    S.toys = snap.docs.map(d => Object.assign({id: d.id}, d.data()));
+    if (!snap.metadata || !snap.metadata.fromCache || snap.size) { S.loaded = true; clearTimeout(timer); setBanner(""); }
+    render(); refreshDetail();
+    if (location.hash.startsWith("#t-") && !$("#modal").classList.contains("show")) route();
+  }, err => { clearTimeout(timer); S.loaded = true; setBanner("The toys couldn't be loaded right now."); render(); });
+  db.doc("shop/settings").onSnapshot(snap => { S.settings = snap.exists ? (snap.data() || {}) : {}; render(); }, () => {});
+})();
+})();
+</script>
+</body>
+</html>
+
